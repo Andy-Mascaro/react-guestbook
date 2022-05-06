@@ -1,25 +1,25 @@
-
+import { useState } from 'react';
 import { signInUser, signUpUser } from '../../services/user';
-
+// import { useHistory } from 'react-router-dom';
 export default function Login() {
-  const history = useHistory();
-  const location = useLocation();
-  const auth = useAuth();
+  //   const history = useHistory();
+  //   const location = useLocation();
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useStat('');
+  const [password, setPassword] = useState('');
   const [type, setType] = useState('sign-in');
+  const [error, setError] = useState('');
 
-  const handleSubmit = async () => {
-    email.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      if (type === 'sing-in') {
+      if (type === 'sign-in') {
         const data = await signInUser(email, password);
         setCurrentUser(data);
-        history.push();
+        // history.push();
       } else {
-          const data = await signUpUser(email, password);
-          setCurrentUser(data);
-          history.push();
+        const data = await signUpUser(email, password);
+        setCurrentUser(data);
+        //   history.push();
       }
     } catch (e) {
       setError('Please Sign UP or Sign in');
@@ -46,7 +46,7 @@ export default function Login() {
           <label>
             Email:
             <input
-              type="auth"
+              type="email"
               value={email}
               onChange={() => setEmail(e.target.value)}
             />
