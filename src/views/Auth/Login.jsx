@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { signInUser, signUpUser } from '../../services/user';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import './Login.css';
+import { useUserContext } from '../../context/UserContext';
+
 export default function Login() {
-  //   const history = useHistory();
-  //   const location = useLocation();
+  const history = useHistory();
+  const { setCurrentUser } = useUserContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [type, setType] = useState('sign-in');
@@ -13,16 +16,16 @@ export default function Login() {
     e.preventDefault();
     try {
       if (type === 'sign-in') {
-        const data = await signInUser(email, password);
+        const data = await signInUser({email, password});
         setCurrentUser(data);
-        // history.push();
+        history.push('/');
       } else {
-        const data = await signUpUser(email, password);
+        const data = await signUpUser({email, password});
         setCurrentUser(data);
-        //   history.push();
+          history.push('/');
       }
-    } catch (e) {
-      setError('Please Sign UP or Sign in');
+    } catch (error) {
+      setError(e.message);
     }
   };
 
@@ -48,7 +51,7 @@ export default function Login() {
             <input
               type="email"
               value={email}
-              onChange={() => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </label>
           <label>
@@ -56,6 +59,7 @@ export default function Login() {
             <input
               type="password"
               value={password}
+              autoComplete="on"
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>

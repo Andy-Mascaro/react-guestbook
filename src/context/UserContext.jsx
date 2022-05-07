@@ -1,14 +1,14 @@
 import { createContext, useState, useContext } from "react";
+import { getUser } from "../services/user";
 
 const UserContext = createContext(); 
 
 const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-   
-   
-    
+  const user = getUser();
+  const [currentUser, setCurrentUser] = useState(user || { email: null });
+  
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ currentUser, setCurrentUser }}>
         {children}
     </UserContext.Provider>
   );
@@ -22,4 +22,4 @@ if (context === undefined) {
 
 return context;
 };
-export { useUserContext, UserProvider };
+export { useUserContext, UserProvider, UserContext};
