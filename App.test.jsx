@@ -27,10 +27,10 @@ describe('Entry List', () => {
       </UserProvider>
     );
 
-    const email = await screen.findByPlaceholderText('click');
+    const email = await screen.findByPlaceholderText('user email');
     userEvent.type(email, 'bill@bill.com');
     
-    const password = await screen.findByPlaceholderText('click2');
+    const password = await screen.findByPlaceholderText('password');
     userEvent.type(password, '111111');
 
     const button = await screen.findByRole('button');
