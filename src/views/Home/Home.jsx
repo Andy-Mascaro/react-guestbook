@@ -67,7 +67,9 @@ export default function Home() {
           {error} <span onClick={() => setError('')}></span>
         </p>
       )}
-      <h1>Your Personal Entries</h1>
+      <h1>Your Personal Entries 
+      <p>{currentUser.email}</p>
+      </h1>
       
         {entries.map((data) => (
           <div key={data.id + data.content}>
