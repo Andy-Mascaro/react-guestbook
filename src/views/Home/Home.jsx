@@ -7,14 +7,19 @@ export default function Home() {
   const [entries, setEntries] = useState([]);
   const [error, setError] = useState('');
   const [newEntry, setNewEntry] = useState('');
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getEntries();
         setEntries(data);
       } catch (error) {
-        setError(e.message);
+        setError(error.message);
       }
+
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     };
     fetchData();
   }, []);
@@ -25,29 +30,31 @@ export default function Home() {
         const data = await getEntries();
         setEntries(data);
       } catch (error) {
-        setError(e.message);
+        setError(error.message);
       }
     };
     fetchData();
   }, [newEntry]);
-  
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const data = await createEntry({ content: newEntry });
       setEntries((prevState) => [...prevState, data]);
       setNewEntry('');
-    } catch (e) {
-      setError(e.message);
+    } catch (error) {
+      setError(error.message);
     }
   };
+
+  if (loading) return <div className="loader">...loading</div>;
 
   return (
     <div className="entries">
       <div>
-        <label>
+        <label className='typing'>
           <input
-          placeholder='Type here'
+            placeholder="Type here"
             type="text"
             value={newEntry}
             onChange={(e) => setNewEntry(e.target.value)}
@@ -61,15 +68,15 @@ export default function Home() {
         </p>
       )}
       <h1>Your Personal Entries</h1>
-      <>
-      {entries.map((data) => (
-          <div key={data.id}>
-          <p>{data.content}</p>
-          <p>{data.created_at}</p>
-          <p>Made By: {currentUser.email}</p>
-        </div>
+      
+        {entries.map((data) => (
+          <div key={data.id + data.content}>
+            <p>{data.content}</p>
+            <p>{data.created_at}</p>
+            <p>Made By: {currentUser.email}</p>
+          </div>
         ))}
-        </>
+      
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { signInUser, signUpUser } from '../../services/user';
 import { useHistory } from 'react-router-dom';
-import './Login.css';
+import style from './Login.css';
 import { useUserContext } from '../../context/UserContext';
 
 export default function Login() {
@@ -33,13 +33,13 @@ export default function Login() {
     <div className="button">
       <h1>
         <span
-          className={type === 'sign-in' ? 'active' : ''}
+          className={type === 'sign-in' ? style.active : ''}
           onClick={() => setType('sign-in')}
         >
           Sign In
         </span>
         <span
-          className={type === 'sign-up' ? 'active' : ''}
+          className={type === 'sign-up' ? style.active : ''}
           onClick={() => setType('sign-up')}
         >
           Sign Up
@@ -49,7 +49,7 @@ export default function Login() {
           <label>
             Email:
             <input
-              type="email"
+              type="email" placeholder='click'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -57,7 +57,7 @@ export default function Login() {
           <label>
             Password:
             <input
-              type="password"
+              type="password" placeholder='click2'
               value={password}
               autoComplete="on"
               onChange={(e) => setPassword(e.target.value)}
