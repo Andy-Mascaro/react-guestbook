@@ -27,12 +27,9 @@ describe('Entry List', () => {
       </UserProvider>
     );
 
-    
-
     const email = await screen.findByPlaceholderText('click');
     userEvent.type(email, 'bill@bill.com');
     
-
     const password = await screen.findByPlaceholderText('click2');
     userEvent.type(password, '111111');
 
@@ -76,12 +73,9 @@ describe('Entry List', () => {
     const loading =  await screen.findByText(/...loading/i);
     expect(loading).toBeInTheDocument();
 
-
     const entry = await screen.findByPlaceholderText('Type here', {}, { timeout: 3000 });
     userEvent.type(entry,'fake entry');
 
-    
-    
     const add = await screen.findByText('Add New Entry');
     server.use(
         rest.post(
@@ -96,12 +90,10 @@ describe('Entry List', () => {
         )
       );
     userEvent.click(add);
-    
-    
-
+  
     const data = await screen.findByText('fake entry');
     expect(data).toBeInTheDocument();
-    screen.debug();
+    
   });
   
 });
